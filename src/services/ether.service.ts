@@ -1,10 +1,6 @@
 import { ethers } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 
-const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_KEY;
-
-export const provider = new ethers.providers.InfuraProvider('goerli', INFURA_ID);
-
 export const detectEthereum = async () => {
     const provider: any = await detectEthereumProvider();
     if (provider) {
@@ -17,7 +13,6 @@ export const detectEthereum = async () => {
         } catch (error) {
             return null;
         }
-
     } else {
         return null;
     }
@@ -44,7 +39,9 @@ export const connectToMetaMask = async () => {
 
 
 export const getBalance = async (address: string) => {
-    const balance = await provider.getBalance(address);
+    const provider: any = await detectEthereumProvider();
+    const providerRpc = new ethers.providers.Web3Provider(provider);
+    const balance = await providerRpc.getBalance(address);
     return ethers.utils.formatEther(balance);
 };
 
@@ -60,8 +57,6 @@ export const transferEthereum = async (senderAddress: string, recipientAddress: 
             value: ethers.utils.parseEther(amount),
         });
 
-        // Wait for the transaction to be mined
-        await tx.wait();
         return tx.hash;
     } catch (error) {
         console.error('Error sending transaction:', error);
