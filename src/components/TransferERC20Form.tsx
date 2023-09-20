@@ -1,5 +1,6 @@
-import { transferEthereum } from '@/services/ether.service';
+import { transferERC20WithEther, transferEthereum } from '@/services/ether.service';
 import { Button, TextInput } from '@mantine/core'
+import { PaperPlaneRight } from '@phosphor-icons/react';
 import { ethers } from 'ethers';
 import React from 'react'
 
@@ -8,7 +9,7 @@ interface IProps {
     senderAddress: string;
 }
 
-export const TransferEthForm = ({ backClick, senderAddress }: IProps) => {
+export const TransferERC20Form = ({ backClick, senderAddress }: IProps) => {
 
     const [address, setAddress] = React.useState<string>('');
     const [amount, setAmount] = React.useState<string>('0');
@@ -36,7 +37,7 @@ export const TransferEthForm = ({ backClick, senderAddress }: IProps) => {
             return;
         }
         setError('');
-       const tx: ethers.providers.TransactionResponse | null = await transferEthereum(senderAddress, address, parseFloat(amount).toString());
+       const tx: ethers.providers.TransactionResponse | null = await transferERC20WithEther(senderAddress, address, parseFloat(amount).toString());
        if(!tx || !tx.hash){
         setError('Error sending transaction');
         setLoading(false);
@@ -56,13 +57,13 @@ export const TransferEthForm = ({ backClick, senderAddress }: IProps) => {
 
   return (
     <div className='flex items-center justify-center flex-col gap-4'>
-          <div className='text-2xl font-bold'>Transfer ETH to another Account</div>
+          <div className='text-2xl font-bold'>Transfer ERC-20 Tokens to another Account</div>
           <Button color='blue' variant='light' size='xs' className='text-blue-500 hover:bg-blue-200 bg-blue-100 font-medium' onClick={backClick}>Back to My Wallet</Button>
           <div className='w-full flex flex-col py-4 gap-y-4'>
           <TextInput placeholder="Start with '0x'" label="Recepient Ethereum Address" withAsterisk className='w-full' value={address} onChange={handleAddressChange} error={error}/>
-          <TextInput placeholder="0" label="ETH to Transfer" withAsterisk className='w-full' value={amount}  onChange={handleAmountChange} error={error}/>
+          <TextInput placeholder="0" label="USDC to Transfer" withAsterisk className='w-full' value={amount}  onChange={handleAmountChange} error={error}/>
           </div>
-          <Button color='blue' variant='filled' size='sm' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={handleSubmit} loading={loading}>Transfer</Button>
+          <Button color='blue' variant='filled' size='sm' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={handleSubmit} loading={loading} >Transfer Tokens</Button>
          {success?  <div className=' text-green-500'>Transfer Completed successfully. Transaction hash: {hash}</div>: null}
         </div>
   )
