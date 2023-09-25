@@ -1,7 +1,7 @@
 import { Button, Loader } from '@mantine/core'
 import { connectToMetaMask, detectEthereum, getBalance, getERC20Balance } from '@/services/ether.service'
 import {  useEffect, useState } from 'react';
-import { TransferEthForm, WalletDetail } from '@/components';
+import { TransferEthForm, TransferWithMultiSig, WalletDetail } from '@/components';
 import { TransferERC20Form } from '@/components/TransferERC20Form';
 
 
@@ -13,6 +13,7 @@ export default function Home() {
   const [ethTransfer, setEthTransfer] = useState<boolean>(false);
   const [erc20Transfer, setErc20Transfer] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [multiSigTransfer, setMultiSigTransfer] = useState<boolean>(false);
 
   const connectWallet = async () => {
     const address = await connectToMetaMask();
@@ -57,7 +58,8 @@ export default function Home() {
         !balance || !address ? <Button color='blue' variant='filled' size='md' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={connectWallet}>Connect your wallet</Button> :
           ethTransfer ? <TransferEthForm backClick={() => setEthTransfer(false)} senderAddress={address} /> : 
           erc20Transfer ? <TransferERC20Form backClick={() => setErc20Transfer(false)} senderAddress={address} /> :
-          <WalletDetail balance={balance} usdcBalance={erc20Balance}  address={address} refreshBalance={refreshBalance} transferETH={() => setEthTransfer(true)}  transferERC20={() => setErc20Transfer(true)} />
+          multiSigTransfer? <TransferWithMultiSig backClick={() => setMultiSigTransfer(false)} senderAddress={address} /> :
+          <WalletDetail balance={balance} usdcBalance={erc20Balance}  address={address} refreshBalance={refreshBalance} transferETH={() => setEthTransfer(true)}  transferERC20={() => setErc20Transfer(true)}  transferWithMultiSig={() => setMultiSigTransfer(true) }/>
         }
       </div>
     </div>
