@@ -107,7 +107,7 @@ export const transferERC20WithEther = async (senderAddress: string, recipientAdd
 }
 
 
-export const transferDAIFromMultisig = async (senderAddress: string, recipientAddress: string, safeAddress: string, tokenAmount: string) => {
+export const transferUSDCFromMultisig = async (senderAddress: string, recipientAddress: string, safeAddress: string, tokenAmount: string) => {
     try {
         const provider: any = await detectEthereumProvider();
         const providerRpc = new ethers.providers.Web3Provider(provider);
@@ -154,10 +154,8 @@ export const transferDAIFromMultisig = async (senderAddress: string, recipientAd
             txData.gasToken,
             txData.refundReceiver,
             txData.signature,
-            { gasLimit: 1000000 }
         );
 
-        console.log('Transaction: ', tx)
 
         return tx;
     } catch (error) {

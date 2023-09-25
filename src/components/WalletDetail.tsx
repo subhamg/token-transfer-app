@@ -28,7 +28,7 @@ export const WalletDetail = ({ balance, address, usdcBalance, refreshBalance, tr
         <div className='flex items-center gap-x-4 mt-4'>
           <Button color='blue' variant='filled' size='xs' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={transferETH} leftIcon={<Image src='eth.svg' alt='Eth' width={16} height={16} />}>Transfer ETH</Button>
           <Button color='blue' variant='filled' size='xs' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={transferERC20} leftIcon={<Image src='usdc.svg' alt='usdc' width={16} height={16} />}>Transfer ERC-20 Tokens</Button>
-          <Button color='blue' variant='filled' size='xs' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={transferWithMultiSig} leftIcon={<Image src='dai.svg' alt='dai' width={16} height={16} />}>Transfer DAI from MultiSig Wallet</Button>
+          <Button color='blue' variant='filled' size='xs' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={transferWithMultiSig} leftIcon={<Image src='usdc.svg' alt='USDC' width={16} height={16} />}>Transfer USDC from MultiSig Wallet</Button>
         </div>
       </div>
 

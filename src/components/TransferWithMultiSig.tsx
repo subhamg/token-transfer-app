@@ -1,4 +1,4 @@
-import { transferDAIFromMultisig, transferERC20WithEther, transferEthereum } from '@/services/ether.service';
+import { transferUSDCFromMultisig, transferERC20WithEther, transferEthereum } from '@/services/ether.service';
 import { Button, TextInput } from '@mantine/core'
 import { PaperPlaneRight } from '@phosphor-icons/react';
 import { ethers } from 'ethers';
@@ -42,7 +42,7 @@ export const TransferWithMultiSig = ({ backClick, senderAddress }: IProps) => {
             return;
         }
         setError('');
-       const tx: ethers.providers.TransactionResponse | null = await transferDAIFromMultisig(senderAddress, address, safeAddress, parseFloat(amount).toString());
+       const tx: ethers.providers.TransactionResponse | null = await transferUSDCFromMultisig(senderAddress, address, safeAddress, parseFloat(amount).toString());
        if(!tx || !tx.hash){
         setError('Error sending transaction');
         setLoading(false);
@@ -67,9 +67,9 @@ export const TransferWithMultiSig = ({ backClick, senderAddress }: IProps) => {
           <div className='w-full flex flex-col py-4 gap-y-4'>
           <TextInput placeholder="Start with '0x'" label="MultiSig Wallet Address" withAsterisk className='w-full' value={safeAddress} onChange={handleSafeAddressChange} error={error}/>
           <TextInput placeholder="Start with '0x'" label="Recepient Address" withAsterisk className='w-full' value={address} onChange={handleAddressChange} error={error}/>
-          <TextInput placeholder="0" label="DAI to Transfer" withAsterisk className='w-full' value={amount}  onChange={handleAmountChange} error={error}/>
+          <TextInput placeholder="0" label="USDC to Transfer" withAsterisk className='w-full' value={amount}  onChange={handleAmountChange} error={error}/>
           </div>
-          <Button color='blue' variant='filled' size='sm' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={handleSubmit} loading={loading} >Transfer DAI</Button>
+          <Button color='blue' variant='filled' size='sm' className='bg-blue-500 hover:bg-blue-600 font-medium' onClick={handleSubmit} loading={loading} >Transfer USDC</Button>
          {success?  <div className=' text-green-500'>Transfer Completed successfully. Transaction hash: {hash}</div>: null}
         </div>
   )
